@@ -15,7 +15,8 @@ led.o: led.h
 
 .PHONY: push
 push:
-	./push.sh
+	$(OBJCOPY) -O ihex -R .eeprom main main.hex
+	sudo $(AVRDUDE) -F -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -b 115200 -U flash:w:main.hex
 
 .PHONY: clean
 clean:
